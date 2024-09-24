@@ -2,6 +2,7 @@
 #define MCU_FW_ESP32_DATAEVENT_H
 
 #include <framework.h>
+#include <cfloat>
 
 class DHTDataEvent : public IEventName<DHTDataEvent> {
 public:
@@ -20,8 +21,8 @@ public:
     }
 
 private:
-    float temperature = -1000;
-    float humidity = -1000;
+    float temperature = -FLT_MAX;
+    float humidity = -FLT_MAX;
 };
 
 #endif //MCU_FW_ESP32_DATAEVENT_H
