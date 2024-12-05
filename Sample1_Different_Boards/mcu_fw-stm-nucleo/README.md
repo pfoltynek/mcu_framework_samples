@@ -1,1 +1,0 @@
-- [ST-LINK, ST-LINK/V2, ST-LINK/V2-1, STLINK-V3 USB driver signed for Windows7, Windows8, Windows10](https://www.st.com/en/development-tools/stsw-link009.html#overview)
