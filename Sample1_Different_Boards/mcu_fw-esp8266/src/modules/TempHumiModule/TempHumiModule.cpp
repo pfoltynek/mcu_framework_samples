@@ -1,5 +1,10 @@
 #include "TempHumiModule.h"
+
+#if DEVICE
 #include <string>
+#else
+#include <sstream>
+#endif
 
 TempHumiModule::TempHumiModule() {
     loggerService = (ILoggerService*) ServiceLocator::getInstance().getService(ILoggerService::getName());
@@ -20,8 +25,14 @@ void TempHumiModule::loop() {
     ITempHumiView* tempHumiSensor = (ITempHumiView*) getSensor(ITempHumiView::getName());
     DHTData data = tempHumiSensor->getData();
 
+#if DEVICE
     loggerService->logInfo(("TempHumiModule::loop() - Temperature: " + String(data.temperature)).c_str());
     loggerService->logInfo(("TempHumiModule::loop() - Humidity: " + String(data.humidity)).c_str());
+#else
+    loggerService->logInfo(("TempHumiModule::loop() - Temperature: " + std::to_string(data.temperature)).c_str());
+    loggerService->logInfo(("TempHumiModule::loop() - Humidity: " + std::to_string(data.humidity)).c_str());
+#endif
+
 
     loggerService->logInfo("TempHumiModule::loop() - Publishing DHTDataEvent");
     EventService::getInstance().publish(DHTDataEvent::getName(), new DHTDataEvent(data.temperature, data.humidity));
